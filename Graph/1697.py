@@ -1,17 +1,27 @@
 from collections import deque
 
 N, K = map(int, input().split())
+max = N if N >= K else K * 2
 Q = deque()
-d = 1
+dist = 0
+visited = set()
+visited.add(N)
 
 while N != K:
-    print(N, end=" - ")
-    if N < K:
-        Q.append(N * 2)
-        Q.append(N + 1)
-    Q.append(N - 1)
-    N = Q.popleft()
+    # print(N)
 
-print()
-print(*Q)
-print(t)
+    if N < K:
+        if N + 1 not in visited:
+            Q.append([N + 1, dist + 1])
+            visited.add(N + 1)
+        if N * 2 not in visited:
+            Q.append([N * 2, dist + 1])
+            visited.add(N * 2)
+
+    if N - 1 not in visited:
+        Q.append([N - 1, dist + 1])
+        visited.add(N - 1)
+
+    N, dist = map(int, Q.popleft())
+
+print(dist)
