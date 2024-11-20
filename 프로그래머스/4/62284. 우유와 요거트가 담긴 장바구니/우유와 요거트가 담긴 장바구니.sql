@@ -1,6 +1,5 @@
 select cart_id
 from cart_products
-where name = 'Milk'
-and cart_id in (select cart_id
-                from cart_products
-                where name = 'Yogurt');
+where name in ('Yogurt', 'Milk')
+group by cart_id
+having count(distinct name) >= 2;
